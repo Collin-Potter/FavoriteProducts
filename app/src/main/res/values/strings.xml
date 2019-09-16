@@ -1,0 +1,11 @@
+<resources>
+  <string name="app_name">Favorite Products</string>
+  <string name="people_details">Product Details</string>
+  <string name="add_people">Add Product</string>
+
+  <string name="hint_name">Name</string>
+
+  <string name="search">Search</string>
+  <string name="save">Save</string>
+    <string name="productId">PRODUCT_ID</string>
+</resources>
