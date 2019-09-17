@@ -30,4 +30,9 @@ class ProductsRepository(application: Application) {
     fun findProduct(name: String): LiveData<List<Product>> {
         return productDao.findBy(name)
     }
+
+    fun removeProduct(product: Product) {
+
+        return productDao.delete(product)
+    }
 }

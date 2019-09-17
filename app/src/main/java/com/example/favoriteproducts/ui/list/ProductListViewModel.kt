@@ -31,4 +31,8 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
             productList.postValue(products)
         }
     }
+
+    fun removeProduct(product: Product) {
+        productsRepository.removeProduct(product)
+    }
 }

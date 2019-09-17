@@ -1,10 +1,7 @@
 package com.example.favoriteproducts.data.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.favoriteproducts.data.model.Product
 
 @Dao
@@ -18,6 +15,9 @@ interface ProductDao {
 
     @Query("DELETE FROM Product")
     fun deleteAll()
+
+    @Delete
+    fun delete(product: Product)
 
     @Query("SELECT * FROM Product WHERE id = :id")
     fun find(id: Int): LiveData<Product>

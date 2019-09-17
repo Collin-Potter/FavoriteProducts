@@ -16,12 +16,20 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/default_padding">
 
+        <ImageView
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/item_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:layout_margin="7dp"
+            android:layout_toEndOf="@id/item_image"
             tools:text="@string/hint_name" />
 
     </RelativeLayout>

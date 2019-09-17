@@ -1,14 +1,20 @@
 package com.example.favoriteproducts.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.SimpleAdapter
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteproducts.R
 import com.example.favoriteproducts.data.model.Product
+import com.example.favoriteproducts.ui.list.util.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_products_list.*
 
 class ProductListFragment : Fragment(),
@@ -51,6 +57,8 @@ class ProductListFragment : Fragment(),
             }
         })
 
+        setSwipeHandler()
+
         addFab.setOnClickListener {
             view.findNavController().navigate(R.id.action_productListFragment_to_addProductFragment)
         }
@@ -71,6 +79,19 @@ class ProductListFragment : Fragment(),
 
     private fun populateProductList(productList: List<Product>) {
         productRecyclerView.adapter = ProductListAdapter(productList, this)
+    }
+
+    private fun setSwipeHandler(){
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val product: Product = viewModel.getProductList().value!![viewHolder.adapterPosition]
+                viewModel.removeProduct(product)
+                viewModel.getAllProducts()
+                Toast.makeText(context, "Item deleted: ${product.name}", Toast.LENGTH_SHORT).show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(productRecyclerView)
     }
 
     override fun onItemClick(product: Product, itemView: View) {
