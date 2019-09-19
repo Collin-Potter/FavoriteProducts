@@ -100,14 +100,12 @@ class ProductListFragment : Fragment(),
 
     private fun showUndoSnackbar(name: String){
         val snackbar: Snackbar = Snackbar.make(view!!, "Item deleted: ${name}", Snackbar.LENGTH_LONG)
-        //TODO: Set snackbar action
         snackbar.setAction("Undo", {
             undoDelete()
         }).show()
     }
 
     private fun undoDelete() {
-        //TODO: Implement undo by re-adding Product
         viewModel.addProduct(tempProduct)
     }
 
