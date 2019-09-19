@@ -35,4 +35,8 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
     fun removeProduct(product: Product) {
         productsRepository.removeProduct(product)
     }
+
+    fun addProduct(product: Product) {
+        productsRepository.insertProduct(product)
+    }
 }

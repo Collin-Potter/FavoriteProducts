@@ -1,9 +1,11 @@
 package com.example.favoriteproducts.ui.add
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -50,7 +52,7 @@ class AddProductFragment : Fragment() {
             textInputName.editText?.text.toString()
         )
         viewModel.addProduct(product)
-
+        view!!.clearFocus()
         Navigation.findNavController(view!!).navigateUp()
     }
 }

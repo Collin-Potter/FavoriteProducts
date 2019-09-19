@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.favoriteproducts.R
 import com.example.favoriteproducts.data.model.Product
 import com.example.favoriteproducts.ui.list.util.SwipeToDeleteCallback
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_products_list.*
 
 class ProductListFragment : Fragment(),
@@ -24,6 +25,8 @@ class ProductListFragment : Fragment(),
 
     private lateinit var searchView: SearchView
     private lateinit var viewModel: ProductListViewModel
+
+    private lateinit var tempProduct: Product
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,13 +88,27 @@ class ProductListFragment : Fragment(),
         val swipeHandler = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val product: Product = viewModel.getProductList().value!![viewHolder.adapterPosition]
+                tempProduct = product
                 viewModel.removeProduct(product)
                 viewModel.getAllProducts()
-                Toast.makeText(context, "Item deleted: ${product.name}", Toast.LENGTH_SHORT).show()
+                showUndoSnackbar(product.name)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(productRecyclerView)
+    }
+
+    private fun showUndoSnackbar(name: String){
+        val snackbar: Snackbar = Snackbar.make(view!!, "Item deleted: ${name}", Snackbar.LENGTH_LONG)
+        //TODO: Set snackbar action
+        snackbar.setAction("Undo", {
+            undoDelete()
+        }).show()
+    }
+
+    private fun undoDelete() {
+        //TODO: Implement undo by re-adding Product
+        viewModel.addProduct(tempProduct)
     }
 
     override fun onItemClick(product: Product, itemView: View) {
